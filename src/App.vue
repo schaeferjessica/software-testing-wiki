@@ -63,6 +63,11 @@
         </div> -->
         </div>
       </div>
+
+      <div class="software-testing__message">
+        <p class="software-testing__message-text">Please view this page on a minimum Screen size  of, 1000px</p>
+        <button class="software-testing__message-button software-testing__link-hover">Enable Full Screen</button>
+      </div>
   </main>
 
   <footer class="software-testing__footer">
@@ -218,9 +223,31 @@ button:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
 }
+@media only screen and (max-width: 1000px) {
+  .software-testing__main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+  }
+}
 .software-testing__grid {
   position: relative;
   height: 95vh;
+}
+@media only screen and (max-width: 1000px) {
+  .software-testing__grid {
+    display: none;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .software-testing__message {
+    display: none;
+  }
+}
+.software-testing__message-button {
+  text-align: center;
+  width: 100%;
 }
 .software-testing__title {
   position: absolute;
