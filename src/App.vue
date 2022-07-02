@@ -185,6 +185,11 @@ button {
   border-radius: 0;
   font-weight: 300;
 }
+a:focus-visible,
+button:focus-visible {
+  outline: 2px dotted black;
+  outline-offset: 5px;
+}
 .software-testing {
   max-width: 1600px;
   padding-left: 20px;
@@ -252,7 +257,12 @@ button {
   left: 0;
   top: 50%;
   transform: translateY(-50%) rotate(-45deg);
-  font-size: 18px;
+  transition: 400ms all ease-in-out;
+  font-size: 20px;
+}
+.software-testing__extern:hover::before,
+.software-testing__extern:focus::before {
+  transform: translateY(-45%) rotate(-45deg)
 }
 .software-testing__inner {
   margin-top: 20px;
