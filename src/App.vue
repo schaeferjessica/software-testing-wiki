@@ -11,10 +11,18 @@
           <ol class="software-testing__list">
             <li class="software-testing__list-item" v-for="item in group.tableOfContentsCollection.items" :key="item.title">
               <button class="software-testing__link-hover">{{item.title}}</button>
-              <span class="software-testing__tooptip" v-if="item.tooltip">{{item.tooltip}}</span>
+              <button class="software-testing__tooptip-button" v-if="item.tooltip">
+                <span class="software-testing__tooptip-icon">i</span>
+              </button>
+              <span class="software-testing__tooptip-text" v-if="item.tooltip">{{item.tooltip}}</span>
             </li>
           </ol>
         </div>
+
+        <button class="software-testing__link-hover">tooptip test</button>
+        <button class="software-testing__tooptip-button">
+          <span class="software-testing__tooptip-icon">i</span>
+        </button>
       </div>
 
       <div class="software-testing__grid">
@@ -264,6 +272,31 @@ button:focus-visible {
 .software-testing__extern:focus::before {
   transform: translateY(-45%) rotate(-45deg)
 }
+.software-testing__tooptip-button {
+  border: 1px solid black;
+  border-radius: 10%;
+  width: 15px;
+  height: 15px;
+  margin-left: 10px;
+  line-height: 0;
+  transition: 400ms all ease-in-out;
+}
+.software-testing__tooptip-button:hover,
+.software-testing__tooptip-button:focus {
+  width: 18px;
+  height: 18px;
+}
+.software-testing__tooptip-button:hover .software-testing__tooptip-icon,
+.software-testing__tooptip-button:focus .software-testing__tooptip-icon {
+ font-size: 13px;
+}
+.software-testing__tooptip-button:focus-visible {
+  outline: 2px dotted black;
+  outline-offset: 2px;
+}
+.software-testing__tooptip-icon {
+  font-size: 11px;
+}
 .software-testing__inner {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -272,9 +305,14 @@ button:focus-visible {
   position: fixed;
   overflow: auto;
   height: 100%;
+  padding-left: 10px;
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+.software-testing__inner--fixed:focus-visible {
+  outline: 2px dotted black;
+  outline-offset: 5px;
 }
  /* Hide scrollbar for Chrome, Safari and Opera */
 .software-testing__inner--fixed::-webkit-scrollbar {
