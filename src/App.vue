@@ -24,7 +24,7 @@
           <div v-for="checkboxGroup in checkboxGroups" :key="checkboxGroup.title">
             <h3>{{checkboxGroup.title}}</h3>
 
-              <ol class="software-testing__list">
+              <ol class="software-testing__list software-testing__list--none">
                 <li class="software-testing__list-item" v-for="checkbox in checkboxGroup.checkboxesCollection.items" :key="checkbox.title">
                   <button class="software-testing__link-hover">{{checkbox.title}}</button>
                   <span class="software-testing__tooptip" v-if="checkbox.tooltip">{{checkbox.tooltip}}</span>
@@ -215,6 +215,10 @@ button {
   bottom: 150px;
   transform: translateX(-22%) rotate(90deg);
   transform-origin: bottom right;
+}
+.software-testing__list--none {
+  list-style: none;
+  padding: 0;
 }
 .software-testing__link-hover {
   color: inherit;
