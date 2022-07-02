@@ -41,7 +41,7 @@
         <div class="software-testing__inner">
           <div class="software-testing__textfield">
             <h3>Tools for Testing</h3>
-            <a href="#" class="software-testing__link-hover">Google Devs - ARIA Labels</a>
+            <a href="#" class="software-testing__extern software-testing__link-hover">Google Devs - ARIA Labels</a>
           </div>
         </div>
 
@@ -241,6 +241,18 @@ button {
   .software-testing__link-hover:focus {
     text-underline-offset: 0.3em;
   }
+}
+.software-testing__extern {
+  position: relative;
+  padding-left: 20px;
+}
+.software-testing__extern::before {
+  content: "➝";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+  font-size: 18px;
 }
 .software-testing__inner {
   margin-top: 20px;
