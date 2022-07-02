@@ -58,7 +58,7 @@
   </main>
 
   <footer class="software-testing__footer">
-    <small>c</small>
+    <a href="https://github.com/schaeferjessica/software-testing-wiki" class="software-testing__link-hover">repo</a>
   </footer>
 </template>
 
@@ -167,6 +167,9 @@ ul {
   list-style: none;
   padding: 0;
 }
+ol {
+  padding-left: 21px;
+}
 a,
 button {
   border: none;
@@ -204,14 +207,14 @@ button {
 }
 .software-testing__grid {
   position: relative;
-  height: 90vh;
+  height: 95vh;
 }
 .software-testing__title {
   position: absolute;
   right: 0;
-  bottom: 100px;
-  transform: rotate(90deg);
-  transform-origin: bottom;
+  bottom: 150px;
+  transform: translateX(-22%) rotate(90deg);
+  transform-origin: bottom right;
 }
 .software-testing__link-hover {
   color: inherit;
@@ -237,6 +240,7 @@ button {
 }
 .software-testing__inner {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .software-testing__inner--fixed {
   position: fixed;
@@ -251,6 +255,8 @@ button {
   display: none;
 }
 .software-testing__footer {
-  height: 10vh;
+  height: 5vh;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
