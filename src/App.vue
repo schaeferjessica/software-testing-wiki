@@ -5,18 +5,25 @@
 
   <main class="software-testing__main">
     <div class="software-testing__grid">
-      <h2 class="software-testing__title">QA Table of Content</h2>
 
-      <div v-for="group in groups" :key="group.title">
-        <ol class="software-testing__list">
-          <li class="software-testing__list-item" v-for="item in group.tableOfContentsCollection.items" :key="item.title">
-            <button class="software-testing__button software-testing__button-hover">
-              <span class="software-testing__span">{{item.title}}</span>
-              <span class="software-testing__tooptip-text" v-if="item.tooltip">{{item.tooltip}}</span>
-            </button>
-          </li>
-        </ol>
+      <div class="software-testing__inner">
+        <h2 class="software-testing__title">QA Table of Content</h2>
+
+        <div class="software-testing__wrapper" v-for="group in groups" :key="group.title">
+          <ol class="software-testing__list">
+            <li class="software-testing__list-item" v-for="item in group.tableOfContentsCollection.items" :key="item.title">
+              <button class="software-testing__button software-testing__button-hover">
+                <span class="software-testing__span">{{item.title}}</span>
+                <span class="software-testing__tooptip-text" v-if="item.tooltip">{{item.tooltip}}</span>
+              </button>
+            </li>
+          </ol>
+        </div>
       </div>
+      
+      <footer class="software-testing__footer">
+        <a href="https://github.com/schaeferjessica/software-testing-wiki" class="software-testing__link-hover">repo</a>
+      </footer>
     </div>
 
     <div class="software-testing__grid">
@@ -28,7 +35,7 @@
 
             <ol class="software-testing__list software-testing__list--none">
               <li class="software-testing__list-item" v-for="checkbox in checkboxGroup.checkboxesCollection.items" :key="checkbox.title">
-                <button class="software-testing__button software-testing__button-hover">
+                <button class="software-testing__button software-testing__button-hover" @click="setActiveCheckbox(checkbox.title)">
                   <span class="software-testing__span">{{checkbox.title}}</span>
                   <span class="software-testing__tooptip-text" v-if="checkbox.tooltip">{{checkbox.tooltip}}</span>
                 </button>
@@ -40,14 +47,11 @@
       
     <div class="software-testing__grid">
       <h2 class="software-testing__title">QA Linklist</h2>
-      <div class="software-testing__textfield">
-        <h3>Tools for Testing</h3>
-        <a href="#" class="software-testing__extern software-testing__button-hover">Google Devs - ARIA Labels</a>
+      <div class="software-testing__textfield software-testing__fixed">
+        <article v-if="activeCheckbox">
+          <RichTextRenderer :document="activeCheckbox.text.json" v-if="activeCheckbox.text"/>
+        </article>
       </div>
-      
-      <footer class="software-testing__footer">
-        <a href="https://github.com/schaeferjessica/software-testing-wiki" class="software-testing__link-hover">repo</a>
-      </footer>
     </div>
 
     <div class="software-testing__message">
@@ -58,7 +62,6 @@
 </template>
 
 <script>
-
 const fetchData = async query => {
   const fetchUrl = `https://graphql.contentful.com/content/v1/spaces/${import.meta.env.VITE_APP_CONTENTFUL_SPACE_ID}`;
   const fetchOptions = {
@@ -86,11 +89,14 @@ export default {
    return {
      groups: [],
      checkboxGroups: [],
+     checkboxesCollection: [],
+     activeCheckbox: null,
    };
  },
  async created() {
    this.groups = await this.getCollection();
    this.checkboxGroups = await this.getCheckboxes();
+   this.checkboxesCollection = await this.getCheckboxesCollection();
  },
  methods: {
    getCollection: async () => {
@@ -129,8 +135,26 @@ export default {
         }
      }`;
      const result = await fetchData(query);
-     
-     return result.data.tableOfContentCollection.items;
+
+    return result.data.tableOfContentCollection.items;
+   },
+   getCheckboxesCollection: async () => {
+     const query = `{
+        checkboxCollection {
+          items {
+            title
+            text {
+              json
+            }
+          }
+        }
+     }`;
+    const result = await fetchData(query);
+    return result.data.checkboxCollection.items;
+   },
+   setActiveCheckbox(title) {
+     const checkbox = this.checkboxesCollection.find(checkbox => checkbox.title === title);
+     this.activeCheckbox = checkbox;
    }
  }
 };
@@ -219,9 +243,7 @@ button:focus-visible {
 .software-testing__grid {
   position: relative;
   height: 100vh;
-}
-.software-testing__textfield {
-  height: 95vh;
+  width: 100%;
 }
 @media only screen and (max-width: 1000px) {
   .software-testing__grid {
@@ -232,6 +254,9 @@ button:focus-visible {
   .software-testing__message {
     display: none;
   }
+}
+.software-testing__inner {
+  height: 95vh;
 }
 .software-testing__message-button {
   text-align: center;
@@ -247,8 +272,15 @@ button:focus-visible {
 .software-testing__group:not(:first-child) {
   margin-top: 20px;
 }
+.software-testing__group:first-child {
+  padding-top: 12px;
+}
 .software-testing__list-title {
   margin-bottom: 5px;
+}
+.software-testing__list {
+  width: 93%;
+  padding-top: 12px;
 }
 .software-testing__list--none {
   list-style: none;
@@ -257,33 +289,39 @@ button:focus-visible {
 .software-testing__button {
   position: relative;
 }
-.software-testing__button-hover {
+.software-testing__button-hover,
+.software-testing__textfield a {
   color: inherit;
   text-underline-offset: var(--offset, 0.2em);
   text-decoration: underline 0.10em;
   transition: --offset 400ms, text-decoration-color 400ms;
 }
 .software-testing__button-hover:hover,
-.software-testing__button-hover:focus {
+.software-testing__button-hover:focus,
+.software-testing__textfield a:hover,
+.software-testing__textfield a:focus {
   --offset: 0.3em;
   text-decoration-color: black;
 }
 
 @supports not (background: paint(something)) {
-  .software-testing__button-hover {
+  .software-testing__button-hover,
+  .software-testing__textfield a {
     transition: text-underline-offset 400ms, text-decoration-color 400ms;
   }
   
   .software-testing__button-hover:hover,
-  .software-testing__button-hover:focus {
+  .software-testing__button-hover:focus,
+  .software-testing__textfield a:hover,
+  .software-testing__textfield a:focus {
     text-underline-offset: 0.3em;
   }
 }
-.software-testing__extern {
+.software-testing__textfield a {
   position: relative;
   padding-left: 20px;
 }
-.software-testing__extern::before {
+.software-testing__textfield a::before {
   content: "➝";
   position: absolute;
   left: 0;
@@ -292,8 +330,8 @@ button:focus-visible {
   transition: 400ms all ease-in-out;
   font-size: 20px;
 }
-.software-testing__extern:hover::before,
-.software-testing__extern:focus::before {
+.software-testing__textfield a:hover::before,
+.software-testing__textfield a:focus::before {
   transform: translateY(-45%) rotate(-45deg)
 }
 .software-testing__tooptip {
@@ -340,11 +378,13 @@ button:focus-visible {
 .software-testing__tooptip-icon {
   font-size: 11px;
 }
+.software-testing__textfield {
+  width: 93%;
+}
 .software-testing__fixed {
   position: relative;
   overflow: auto;
   height: 100%;
-  padding-left: 10px;
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -359,7 +399,5 @@ button:focus-visible {
 }
 .software-testing__footer {
   height: 5vh;
-  display: flex;
-  justify-content: flex-end;
 }
 </style>

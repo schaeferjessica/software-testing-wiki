@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "contentful": "^9.1.32",
+    "contentful-rich-text-vue-renderer": "^3.0.0",
     "cypress": "^10.3.0",
     "vue": "^3.2.25"
   },
