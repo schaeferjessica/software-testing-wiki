@@ -12,7 +12,7 @@
           <li class="software-testing__list-item" v-for="item in group.tableOfContentsCollection.items" :key="item.title">
             <button class="software-testing__button software-testing__button-hover">
               <span class="software-testing__span">{{item.title}}</span>
-              <small class="software-testing__tooptip-text" v-if="item.tooltip">{{item.tooltip}}</small>
+              <span class="software-testing__tooptip-text" v-if="item.tooltip">{{item.tooltip}}</span>
             </button>
           </li>
         </ol>
@@ -30,7 +30,7 @@
               <li class="software-testing__list-item" v-for="checkbox in checkboxGroup.checkboxesCollection.items" :key="checkbox.title">
                 <button class="software-testing__button software-testing__button-hover">
                   <span class="software-testing__span">{{checkbox.title}}</span>
-                  <small class="software-testing__tooptip-text" v-if="checkbox.tooltip">{{checkbox.tooltip}}</small>
+                  <span class="software-testing__tooptip-text" v-if="checkbox.tooltip">{{checkbox.tooltip}}</span>
                 </button>
               </li>
             </ol>
