@@ -381,6 +381,16 @@ button:focus-visible {
 .software-testing__textfield {
   width: 93%;
 }
+.software-testing__textfield h3 {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  padding: 0;
+}
+.software-testing__textfield p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.8;
+}
 .software-testing__fixed {
   position: relative;
   overflow: auto;
